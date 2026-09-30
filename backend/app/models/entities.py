@@ -6,6 +6,7 @@ from sqlalchemy import (
     Integer,
     Numeric,
     String,
+    Text,
 )
 
 from backend.app.core.database import Base
@@ -127,3 +128,45 @@ class NetworkObservation(Base):
         Index("idx_observation_dst_ip", "dst_ip"),
         Index("idx_observation_txid", "txid"),
     )
+
+
+class AnalysisSession(Base):
+    __tablename__ = "analysis_sessions"
+
+    id = Column(String(64), primary_key=True)
+    name = Column(String(255), nullable=False)
+    created_at = Column(DateTime, nullable=False)
+    completed_at = Column(DateTime, nullable=True)
+    status = Column(String(32), default="COMPLETED")
+    dataset_name = Column(String(255), nullable=True)
+    total_transactions = Column(Integer, default=0)
+    total_wallets = Column(Integer, default=0)
+    high_risk_alerts = Column(Integer, default=0)
+    anomalies_detected = Column(Integer, default=0)
+    max_risk = Column(Numeric(5, 2), default=0)
+    average_risk = Column(Numeric(5, 2), default=0)
+
+
+class GeneratedDataset(Base):
+    __tablename__ = "generated_datasets"
+
+    id = Column(String(64), primary_key=True)
+    filename = Column(String(255), nullable=False)
+    file_path = Column(String(512), nullable=False)
+    generated_at = Column(DateTime, nullable=False)
+    seed = Column(Integer, nullable=False)
+    row_count = Column(Integer, default=3000)
+    fingerprint = Column(String(64), nullable=False, unique=True, index=True)
+    model_signature = Column(String(255), nullable=False)
+    model_versions = Column(Text, nullable=True)
+    scenario_distribution = Column(Text, nullable=True)
+    behavior_mix = Column(String(255), nullable=True)
+    parameters = Column(Text, nullable=True)
+    validation_status = Column(String(32), default="VALIDATED")
+    analysis_status = Column(String(32), default="READY")
+    transaction_count = Column(Integer, default=0)
+    wallet_count = Column(Integer, default=0)
+    high_risk_count = Column(Integer, default=0)
+    max_risk = Column(Numeric(5, 2), default=0)
+    average_risk = Column(Numeric(5, 2), default=0)
+    anomalies_detected = Column(Integer, default=0)

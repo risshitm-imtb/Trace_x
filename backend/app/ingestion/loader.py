@@ -376,10 +376,13 @@ def load_csv_to_database(
     print(
         f"Observations : {observations_added}"
     )
-    print(
-        f"Wallets      : {len(wallet_addresses)}"
-    )
-    print(
-        f"IPs          : {len(ip_addresses)}"
-    )
     print("========================================")
+
+    return {
+        "transactions": transactions_added,
+        "inputs": inputs_added,
+        "outputs": outputs_added,
+        "observations": observations_added,
+        "wallets": len(wallet_addresses),
+        "ips": len(ip_addresses),
+    }

@@ -1,4 +1,6 @@
 from backend.app.models.entities import (
+    AnalysisSession,
+    GeneratedDataset,
     IPAddress,
     NetworkObservation,
     Transaction,
@@ -8,6 +10,8 @@ from backend.app.models.entities import (
 )
 
 __all__ = [
+    "AnalysisSession",
+    "GeneratedDataset",
     "IPAddress",
     "NetworkObservation",
     "Transaction",

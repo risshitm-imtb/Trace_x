@@ -1,0 +1,151 @@
+{
+  "wallet_anomaly": {
+    "model_id": "wallet_anomaly",
+    "name": "Wallet Behavioral Anomaly Detector",
+    "purpose": "Detects anomalous wallet velocity, flow imbalance, and network infrastructure diversity",
+    "algorithm": "Isolation Forest (300 estimators)",
+    "version": "1.2.0",
+    "features": [
+      "transaction_count",
+      "total_received",
+      "total_sent",
+      "input_tx_count",
+      "output_tx_count",
+      "source_ip_count",
+      "destination_ip_count",
+      "asn_count",
+      "tx_per_ip",
+      "flow_imbalance",
+      "network_diversity"
+    ],
+    "artifact_path": "models/wallet_anomaly_model.joblib",
+    "status": "ACTIVE",
+    "trained_at": "2026-09-30T04:00:22",
+    "sample_count": 1440,
+    "metrics": {
+      "contamination": 0.08,
+      "n_estimators": 300,
+      "anomalies_detected": 116,
+      "anomaly_rate": 0.0806
+    }
+  },
+  "transaction_risk": {
+    "model_id": "transaction_risk",
+    "name": "Transaction Anomaly & Risk Scorer",
+    "purpose": "Evaluates transaction-level outlier scores, fan-out ratios, and fee-to-value anomalies",
+    "algorithm": "Isolation Forest + Heuristic Risk Scorer",
+    "version": "1.1.0",
+    "features": [
+      "total_input",
+      "total_output",
+      "fee",
+      "fee_ratio",
+      "input_count",
+      "output_count",
+      "fanout_ratio",
+      "value_per_output"
+    ],
+    "artifact_path": "models/transaction_anomaly_model.joblib",
+    "status": "ACTIVE",
+    "trained_at": "2026-09-30T04:00:23",
+    "sample_count": 9000,
+    "metrics": {
+      "contamination": 0.05,
+      "n_estimators": 200,
+      "anomalies_detected": 450,
+      "anomaly_rate": 0.05
+    }
+  },
+  "network_anomaly": {
+    "model_id": "network_anomaly",
+    "name": "Network Propagation Anomaly Model",
+    "purpose": "Identifies peer-to-peer relay anomalies, autonomous system concentration, and unusual IP pairing",
+    "algorithm": "Isolation Forest (Network Observation Density)",
+    "version": "1.0.0",
+    "features": [
+      "src_ip_freq",
+      "dst_ip_freq",
+      "asn_freq",
+      "country_entropy",
+      "src_port_bucket",
+      "dst_port"
+    ],
+    "artifact_path": "models/network_anomaly_model.joblib",
+    "status": "ACTIVE",
+    "trained_at": "2026-09-30T04:00:23",
+    "sample_count": 15000,
+    "metrics": {
+      "contamination": 0.06,
+      "n_estimators": 150,
+      "anomalies_detected": 900,
+      "anomaly_rate": 0.06
+    }
+  },
+  "behavior_clustering": {
+    "model_id": "behavior_clustering",
+    "name": "Entity Behavioral Archetype Discovery",
+    "purpose": "Unsupervised clustering classifying entities into behavioral archetypes (Retail, Velocity, Peel, Mix, Vault)",
+    "algorithm": "MiniBatchKMeans (k=5 clusters)",
+    "version": "1.0.0",
+    "features": [
+      "transaction_count",
+      "tx_per_ip",
+      "network_diversity",
+      "flow_imbalance",
+      "total_received"
+    ],
+    "artifact_path": "models/behavior_clustering_model.joblib",
+    "status": "ACTIVE",
+    "trained_at": "2026-09-30T04:00:23",
+    "sample_count": 1440,
+    "metrics": {
+      "k_clusters": 5,
+      "archetypes": [
+        "Retail P2P",
+        "High Velocity Relay",
+        "Peeling Chain",
+        "Mixing Pool",
+        "Consolidator Vault"
+      ],
+      "n_clusters": 5,
+      "archetype_distribution": {
+        "Standard Retail / P2P": 487,
+        "High Velocity Relay": 278,
+        "Peeling Chain Layer": 42,
+        "Mixing / Tumbler Pool": 208,
+        "Consolidator / Cold Vault": 425
+      }
+    }
+  },
+  "risk_classifier": {
+    "model_id": "risk_classifier",
+    "name": "Multi-Vector Risk Fusion Engine",
+    "purpose": "Fuses behavioral anomalies, structural fan-out, velocity, and network diversity into continuous risk scores and priority tiers",
+    "algorithm": "Multi-Vector Ensemble Scoring & Priority Calibration",
+    "version": "1.2.0",
+    "features": [
+      "anomaly_component",
+      "velocity_component",
+      "network_component",
+      "flow_component",
+      "fanout_signal",
+      "reuse_signal"
+    ],
+    "artifact_path": "models/risk_scoring_engine.json",
+    "status": "ACTIVE",
+    "trained_at": "2026-09-30T04:00:23",
+    "sample_count": 1440,
+    "metrics": {
+      "risk_weights": {
+        "anomaly": 0.5,
+        "velocity": 0.2,
+        "network": 0.15,
+        "flow": 0.15
+      },
+      "anomaly_component": 0.5,
+      "velocity_component": 0.2,
+      "network_component": 0.15,
+      "flow_component": 0.15
+    }
+  }
+}

@@ -1,1150 +1,378 @@
-```markdown
-# Trace-X
+# TRACE-X // AI-Powered Bitcoin Transaction Monitoring & Forensic Intelligence Workstation
 
-## AI-Powered Bitcoin Transaction Traffic Monitoring & Investigation Platform
+[![Platform](https://img.shields.io/badge/Platform-macOS%20%7C%20Linux-blue?style=flat-square)](#)
+[![Python](https://img.shields.io/badge/Python-3.12%2B-cyan?style=flat-square&logo=python)](#)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.115%2B-009688?style=flat-square&logo=fastapi)](#)
+[![Machine Learning](https://img.shields.io/badge/ML-Isolation%20Forest%20%2B%20Ensemble-orange?style=flat-square)](#)
+[![Database](https://img.shields.io/badge/Database-SQLite%203%20%2F%20SQLAlchemy-003B57?style=flat-square&logo=sqlite)](#)
+[![PDF Generation](https://img.shields.io/badge/Reports-ReportLab%20Vector%20Engine-red?style=flat-square)](#)
 
-> **Detect. Correlate. Investigate.**
-
-Trace-X is an offline cryptocurrency investigation platform designed to correlate **Bitcoin blockchain transaction activity** with **network-layer observations** such as IP addresses, ports, timestamps, countries, and Autonomous Systems (ASNs).
-
-The platform combines structured data ingestion, entity correlation, behavioral feature engineering, machine-learning-based anomaly detection, graph analysis, risk scoring, and explainable investigative signals into a unified analyst-oriented interface.
+> **Detect. Correlate. Investigate.**  
+> TRACE-X is an offline-ready, publication-grade cryptocurrency forensic workstation designed to correlate **Bitcoin on-chain blockchain transaction activity** with **network-layer observations** (IP addresses, ports, ASNs, geographic locations, and propagation timing) to detect anomalies, analyze high-risk entities, visualize transaction flows, and generate certified intelligence dossiers.
 
 ---
 
-## Overview
+## Table of Contents
 
-Traditional blockchain analysis primarily focuses on on-chain activity, while network monitoring provides a different perspective on transaction-related infrastructure.
+- [1. Executive Summary](#1-executive-summary)
+- [2. System Architecture](#2-system-architecture)
+- [3. Core Forensic Capabilities](#3-core-forensic-capabilities)
+  - [3.1 Command Center](#31-command-center)
+  - [3.2 Wallet Forensic Dossier](#32-wallet-forensic-dossier)
+  - [3.3 Transaction Forensic Flow](#33-transaction-forensic-flow)
+  - [3.4 Network Graph Topology](#34-network-graph-topology)
+  - [3.5 Threat Intelligence & Alerts](#35-threat-intelligence--alerts)
+  - [3.6 Dataset Ingestion & Multi-Model Pipeline](#36-dataset-ingestion--multi-model-pipeline)
+  - [3.7 Analysis Sessions & Audit Log](#37-analysis-sessions--audit-log)
+  - [3.8 Certified Forensic Report Dossier & PDF Export](#38-certified-forensic-report-dossier--pdf-export)
+  - [3.9 System Diagnostics & Workstation Health](#39-system-diagnostics--workstation-health)
+- [4. Multi-Vector Risk Engine & ML Pipeline](#4-multi-vector-risk-engine--ml-pipeline)
+- [5. Technology Stack](#5-technology-stack)
+- [6. Directory Structure](#6-directory-structure)
+- [7. Installation & Setup](#7-installation--setup)
+- [8. Quick Start & Execution](#8-quick-start--execution)
+- [9. REST API Reference](#9-rest-api-reference)
+- [10. Data Integrity & Ethical Disclaimer](#10-data-integrity--ethical-disclaimer)
 
-**Trace-X connects these two perspectives.**
+---
 
-The system ingests structured Bitcoin transaction and network metadata, validates and normalizes the information, stores it in an investigation database, extracts wallet-level behavioral and network features, applies an unsupervised anomaly detection model, and presents ranked entities for further investigation.
+## 1. Executive Summary
 
-### Core Pipeline
+Traditional blockchain intelligence tools analyze on-chain transaction data in isolation, while network security monitors observe traffic without blockchain context. **TRACE-X bridges this divide.**
 
-```text
-┌──────────────────────────────┐
-│      RAW DATA SOURCES        │
-│  CSV / JSON / XML Metadata   │
-└──────────────┬───────────────┘
-               │
-               ▼
-┌──────────────────────────────┐
-│        DATA INGESTION        │
-│ Validation + Normalization   │
-└──────────────┬───────────────┘
-               │
-               ▼
-┌──────────────────────────────┐
-│     INVESTIGATION DATABASE   │
-│ Wallets / TXs / IPs / Events │
-└──────────────┬───────────────┘
-               │
-               ▼
-┌──────────────────────────────┐
-│     FEATURE ENGINEERING      │
-│ Behavioral + Network Signals │
-└──────────────┬───────────────┘
-               │
-               ▼
-┌──────────────────────────────┐
-│     ML ANOMALY DETECTION     │
-│       Isolation Forest       │
-└──────────────┬───────────────┘
-               │
-               ▼
-┌──────────────────────────────┐
-│        RISK SCORING          │
-│      0 – 100 Priority        │
-└──────────────┬───────────────┘
-               │
-               ▼
-┌──────────────────────────────┐
-│ EXPLAINABLE INVESTIGATIVE    │
-│          SIGNALS              │
-└──────────────┬───────────────┘
-               │
-               ▼
-┌──────────────────────────────┐
-│       TRACE-X DASHBOARD      │
-│ Alerts / Wallets / Graphs    │
-│ Transactions / Investigation │
-└──────────────────────────────┘
+TRACE-X normalizes cryptocurrency transactions alongside observed IP addresses, ports, autonomous systems (ASNs), and timestamps. It uses an unsupervised machine-learning engine (**Isolation Forest**) paired with multi-vector heuristic risk scoring to detect anomalous transaction velocity, peeling chains, mixing patterns, and distributed relay infrastructure.
+
+```
+┌─────────────────────────┐       ┌──────────────────────────┐
+│   On-Chain Blockchain   │       │ Network-Layer Telemetry  │
+│ TXIDs / Inputs / Outputs│       │ IPs / Ports / ASNs / Geo │
+└────────────┬────────────┘       └─────────────┬────────────┘
+             │                                  │
+             └─────────────────┬────────────────┘
+                               ▼
+            ┌───────────────────────────────────────┐
+            │   TRACE-X Ingestion & Normalization   │
+            └──────────────────┬────────────────────┘
+                               ▼
+            ┌───────────────────────────────────────┐
+            │   Feature Extraction & Multi-Vector   │
+            │          Isolation Forest ML          │
+            └──────────────────┬────────────────────┘
+                               ▼
+            ┌───────────────────────────────────────┐
+            │  4-Vector Risk Scoring & Explanation  │
+            └──────────────────┬────────────────────┘
+                               ▼
+       ┌─────────────────────────────────────────────────┐
+       │   TRACE-X Forensic Intelligence Workstation     │
+       │   Dossiers • Flows • Graphs • Alerts • Reports  │
+       └─────────────────────────────────────────────────┘
 ```
 
 ---
 
-# Problem Statement
+## 2. System Architecture
 
-Bitcoin provides transparent blockchain data, but blockchain-only analysis does not always provide sufficient context for understanding the infrastructure associated with observed transaction activity.
-
-At the same time, network-level observations can contain valuable information such as:
-
-- Source and destination IP addresses
-- Ports
-- Timing
-- Geographic information
-- Autonomous Systems
-- Transaction identifiers
-
-The challenge is to correlate these two layers and identify entities whose behavior deserves further investigation.
-
-Trace-X addresses this by building an investigation-oriented pipeline that connects:
-
-```text
-Blockchain Layer
-       +
-Network Layer
-       +
-Behavioral Analysis
-       +
-Entity Relationships
-       +
-Machine Learning
-       ↓
-Prioritized Investigative Leads
+```
+                               TRACE-X WORKSTATION
+                                        │
+        ┌───────────────────────────────┴───────────────────────────────┐
+        │                                                               │
+┌───────▼────────┐                                              ┌───────▼────────┐
+│  DATA LAYER    │                                              │ PRESENTATION   │
+├────────────────┤                                              ├────────────────┤
+│ • SQLite DB    │                                              │ • Vanilla HTML5│
+│ • SQLAlchemy   │                                              │ • Vanilla CSS3 │
+│ • CSV Ingest   │                                              │ • Vanilla ES6  │
+│ • DB-IP MMDB   │                                              │ • Force Canvas │
+└───────┬────────┘                                              └───────▲────────┘
+        │                                                               │
+        ▼                                                               │
+┌───────────────────────────────────────────────────────────────┐       │
+│                     FASTAPI REST BACKEND                      ├───────┘
+├───────────────────────────────────────────────────────────────┤
+│ • /api/overview       • /api/wallet/{address}  • /api/datasets│
+│ • /api/alerts         • /api/transaction/{tx}  • /api/reports │
+│ • /api/system/health  • /api/graph             • /api/sessions│
+└───────┬───────────────────────────────────────────────────────┘
+        │
+        ▼
+┌───────────────────────────────────────────────────────────────┐
+│                   MACHINE LEARNING PIPELINE                   │
+├───────────────────────────────────────────────────────────────┤
+│ • 9-Dimensional Behavioral & Network Feature Engineering      │
+│ • StandardScaler Normalization                                │
+│ • Isolation Forest Anomaly Detection (300 Estimators)         │
+│ • 4-Vector Risk Engine (ML, Velocity, Network, Graph)         │
+│ • Multi-Model Synthetic Dataset Generator                     │
+└───────────────────────────────────────────────────────────────┘
 ```
 
 ---
 
-# Key Capabilities
+## 3. Core Forensic Capabilities
 
-## 1. Multi-Source Data Ingestion
+### 3.1 Command Center
+* **Live HUD Intelligence Metrics**: Displays Total Monitored Wallets, High-Risk Entities, ML Anomalies, Fleet Average Risk, and Observed IP Nodes.
+* **Risk Distribution Bar**: Visual categorical breakdown across Critical ($\ge 80$), High ($60\text{--}79$), Medium ($35\text{--}59$), and Safe ($< 35$) risk bands.
+* **Priority Threat Feed**: Real-time high-priority alerts with one-click entity inspection.
+* **Workstation Health Strip**: Live status of the backend API gateway, SQLite database engine, and ML model inference pipeline.
 
-Trace-X is designed to ingest structured cryptocurrency transaction and network metadata from formats including:
+### 3.2 Wallet Forensic Dossier
+* **Entity Identity Lookup**: Search bar supporting direct query of any Bitcoin address (`bc1...`, `1...`, `3...`) with error fallback.
+* **4-Vector Risk Dimension Breakdown**:
+  * `ML Classification (50%)`: Isolation Forest behavioral outlier confidence.
+  * `Velocity & Flow (20%)`: Anomaly metrics derived from transaction frequency and volume dispersion.
+  * `Network Infrastructure (15%)`: Risk associated with observed IP diversity, VPN/TOR/bulletproof hosting, and ASNs.
+  * `Graph Centrality (15%)`: Proximity and hub connectivity to known illicit clusters.
+* **Net Flow Ledger**: Explicit calculations for Total Received, Total Sent, Net Balance Delta, and Transaction Volume.
+* **Connected Counterparties Dossier**: Detailed table documenting counterparties, entity types, direct transaction count, transferred volume, and composite risk levels.
+* **Chronological Audit Trail**: Full transaction history tagged with directional markers (`INCOMING` vs `OUTGOING`).
 
-- CSV
-- JSON
-- XML
+### 3.3 Transaction Forensic Flow
+* **Interactive TXID Search**: Direct lookup supporting arbitrary transaction hashes.
+* **3-Column Forensic Topology Diagram**:
+  $$\text{Inputs (Sender Wallets)} \longrightarrow \text{Transaction Hash Core Node} \longrightarrow \text{Outputs (Recipient Wallets)}$$
+* **Multi-Vector Investigative Evidence**: Synthetic rationale cards highlighting fan-out dispersion, round-value heuristics, peeling patterns, and fee anomalies.
+* **Network-Layer Observations**: Correlates source/destination IP addresses, observation ports, ISP nodes, ASNs, and relay timestamps.
 
-The current prototype uses CSV-based synthetic Bitcoin traffic data.
+### 3.4 Network Graph Topology
+* **Interactive Canvas Physics Engine**: Deterministic force-directed layout utilizing Euclidean distance calculations (`Math.hypot`).
+* **Graph Synopsis Strip**: Live graph metrics showing total node count, active edges, graph density %, high-risk node density, and mean degree.
+* **Multi-Level Scope Filter**:
+  * **Focused Target Subgraph**: Isolates a specific suspect wallet and its 1st/2nd degree counterparties.
+  * **Global Dataset Overview**: Renders full sampled fleet topology.
+* **Workstation Tools**: Node limit selectors ($60, 120, 200$), zoom/pan controls, node ID search drawer, and entity inspector sidebar.
 
-Supported investigation fields include:
+### 3.5 Threat Intelligence & Alerts
+* **Ranked Priority Queue**: Sorted by composite risk score with severity badges (`CRITICAL`, `HIGH`, `MEDIUM`).
+* **Filtering Controls**: Filter alerts by risk threshold, anomaly label, or address.
+* **Direct Workstation Navigation**: 1-click jump to Wallet Dossier, Network Graph, or Forensic Report.
 
-- Timestamp
-- Source IP
-- Destination IP
-- Source port
-- Destination port
-- Transaction ID (TXID)
-- Input addresses
-- Output addresses
-- Input amounts
-- Output amounts
-- Country
-- ASN
-- Transaction fee
-- Script type
+### 3.6 Dataset Ingestion & Multi-Model Pipeline
+* **Multi-Source Ingestion**: Drag-and-drop or file browsing for RFC-4180 CSV transaction datasets.
+* **Preset Ingestion**: 1-click loading of the standardized benchmark dataset (`bitcoin_traffic.csv`).
+* **Fresh Dataset Synthesis**: Generates fresh, multi-model synthetic datasets without overwriting historical data.
+* **Generated Dataset Archive & History**: Persistent SQLite-backed repository tracking all historical datasets with sample counts, transaction counts, anomaly counts, generation dates, and model signatures.
+* **Operational Actions**:
+  * `[INGEST & TRAIN]`: Feeds dataset directly into the active database and runs the ML pipeline.
+  * `[DOWNLOAD CSV]`: Streams raw dataset file directly from disk.
+  * `[DELETE]`: Safely purges non-default datasets and their disk artifacts.
+
+### 3.7 Analysis Sessions & Audit Log
+* **Session Records**: Complete audit trail of all ingestion and ML training executions.
+* **Session Metadata**: Tracks dataset name, start time, completion duration, transaction volume, wallet count, alerts detected, and peak risk scores.
+
+### 3.8 Certified Forensic Report Dossier & PDF Export
+* **12-Section Cyber-Intel Dossier**:
+  1. Header & Case Identification
+  2. Executive Findings & Threat Overview
+  3. Evidentiary Integrity & Cryptographic SHA-256 Checksum
+  4. Entity Identity & Scope
+  5. 4-Vector Risk Assessment Breakdown
+  6. Machine Learning Model Scorecard
+  7. Behavioral Profile & Anomaly Flags
+  8. Network Infrastructure & Relay Telemetry
+  9. Transaction Audit Trail
+  10. Connected Counterparty Fleet Analysis
+  11. Forensic Analysis Session History
+  12. Formal Investigator Attestation & Sign-Off Block
+* **ReportLab Vector PDF Generator**: Generates publication-grade, vector-drawn PDF files (`/api/reports/pdf`) with headers, risk scorecards, styled audit tables, and tamper-evident hashes.
+* **Target Scope Selector**: Switch between Global Dataset Audits and Suspect-Targeted Wallet Dossiers.
+
+### 3.9 System Diagnostics & Workstation Health
+* **Database Engine**: Live row counts for `wallets`, `transactions`, `network_observations`, `ips`, and `sessions`.
+* **ML Model Registry**: Active model signatures, feature vector dimensions, tree counts ($300$ estimators), and contamination factors ($0.08$).
+* **Environment Specs**: Python version, OS platform, and Uvicorn runtime configuration.
 
 ---
 
-## 2. Blockchain Entity Modeling
+## 4. Multi-Vector Risk Engine & ML Pipeline
 
-Transaction information is normalized into investigation entities including:
+### 4.1 Feature Engineering (9 Vectors)
 
-- Wallets
-- Transactions
-- Transaction inputs
-- Transaction outputs
-- IP addresses
-- Network observations
+| Feature | Category | Description |
+| :--- | :--- | :--- |
+| `transaction_count` | Velocity | Total transactions associated with the wallet |
+| `total_received` | Value | Aggregate inbound volume in BTC |
+| `total_sent` | Value | Aggregate outbound volume in BTC |
+| `source_ip_count` | Infrastructure | Count of distinct originating IP addresses |
+| `destination_ip_count` | Infrastructure | Count of distinct recipient IP addresses |
+| `asn_count` | Network | Count of distinct Autonomous Systems observed |
+| `tx_per_ip` | Ratio | Transaction density per observed IP node |
+| `flow_imbalance` | Flow | Normalized difference between received and sent volume |
+| `network_diversity` | Network | Entropy of IP and ASN infrastructure |
 
-Conceptually:
+### 4.2 Composite Risk Formula
 
-```text
-                 ┌──────────────┐
-                 │   Wallet     │
-                 └──────┬───────┘
-                        │
-              ┌─────────┴─────────┐
-              │                   │
-              ▼                   ▼
-       Transaction Input   Transaction Output
-              │                   │
-              └─────────┬─────────┘
-                        ▼
-                 ┌──────────────┐
-                 │ Transaction  │
-                 └──────┬───────┘
-                        │
-                        ▼
-                 Network Observation
-                        │
-                 ┌──────┴──────┐
-                 ▼             ▼
-              Source IP    Destination IP
+$$\text{Risk Score} = \min\left(100, \; 0.50 \cdot S_{\text{ML}} + 0.20 \cdot S_{\text{Velocity}} + 0.15 \cdot S_{\text{Network}} + 0.15 \cdot S_{\text{Flow}}\right)$$
+
+Where:
+* $S_{\text{ML}} = \text{Isolation Forest Anomaly Confidence} \times 100$
+* $S_{\text{Velocity}} = \min\left(100, \; \frac{\text{tx\_count}}{30} \times 100\right)$
+* $S_{\text{Network}} = \min\left(100, \; \frac{\text{asn\_count} + \text{source\_ip\_count}}{10} \times 100\right)$
+* $S_{\text{Flow}} = |\text{flow\_imbalance}| \times 100$
+
+---
+
+## 5. Technology Stack
+
+* **Runtime & Language**: Python 3.12+
+* **Backend Web Framework**: FastAPI (Async REST API)
+* **ASGI Server**: Uvicorn
+* **Database & ORM**: SQLite 3 / SQLAlchemy
+* **Machine Learning**: Scikit-Learn (`IsolationForest`, `StandardScaler`), NumPy, Pandas
+* **Model Serialization**: Joblib
+* **PDF Vector Engine**: ReportLab
+* **GeoIP & ASN Lookup**: MaxMind GeoIP2 / DB-IP Lite MMDB
+* **Frontend UI**: Vanilla HTML5, Vanilla CSS3 (Custom Design System, Glassmorphism), Vanilla JavaScript ES6 (Custom Single-Page Router & Canvas Graph Engine)
+
+---
+
+## 6. Directory Structure
+
 ```
-
-This normalized structure allows investigators to move from an individual wallet to its transactions, connected wallets, and observed network infrastructure.
-
----
-
-# 3. Network-Layer Correlation
-
-Trace-X associates transaction activity with observed network infrastructure.
-
-The system tracks:
-
-- Source IP addresses
-- Destination IP addresses
-- Source ports
-- Destination ports
-- Countries
-- Autonomous Systems
-- Observation timestamps
-- Associated TXIDs
-
-This adds a network-context layer around blockchain entities.
-
----
-
-# 4. Machine Learning Anomaly Detection
-
-Trace-X uses an **Isolation Forest** model for unsupervised wallet-level behavioral anomaly detection.
-
-The current feature set includes:
-
-| Feature | Description |
-|---|---|
-| Transaction Count | Number of transactions associated with the wallet |
-| Total Received | Total observed incoming value |
-| Total Sent | Total observed outgoing value |
-| Input TX Count | Number of transactions where the wallet appears as an input |
-| Output TX Count | Number of transactions where the wallet appears as an output |
-| Source IP Count | Number of distinct observed source IPs |
-| Destination IP Count | Number of distinct destination IPs |
-| ASN Count | Number of distinct observed ASNs |
-| Transactions per IP | Transaction activity relative to observed IP diversity |
-| Flow Imbalance | Difference between incoming and outgoing behavior |
-| Network Diversity | Combined network infrastructure diversity |
-
-The synthetic dataset's scenario labels are **not used as ML input features**.
-
-The anomaly detector instead learns behavioral outliers from the engineered wallet features.
-
-### Model Configuration
-
-```text
-Algorithm:        Isolation Forest
-Estimators:       300
-Contamination:    0.08
-Random State:     42
-Parallelization:  Enabled
-Scaling:          StandardScaler
-```
-
----
-
-# 5. Investigative Risk Scoring
-
-ML anomaly output is combined with behavioral and network signals to generate a normalized **0–100 investigative risk score**.
-
-Current scoring components:
-
-```text
-ML Anomaly Signal       50%
-Transaction Velocity    20%
-Network Diversity       15%
-Flow Imbalance          15%
-```
-
-Conceptually:
-
-```text
-                 ┌─────────────────┐
-                 │  ML Anomaly     │
-                 │      50%        │
-                 └────────┬────────┘
-                          │
-       ┌──────────────────┼──────────────────┐
-       │                  │                  │
-       ▼                  ▼                  ▼
-   Velocity            Network             Flow
-     20%                 15%                15%
-       │                  │                  │
-       └──────────────────┴──────────────────┘
-                          │
-                          ▼
-                INVESTIGATIVE RISK
-                     0 – 100
-```
-
-The risk score is intended to prioritize entities for analyst attention.
-
-> **Important:** The Trace-X risk score is an investigative prioritization signal. It is not a probability of criminal activity and does not constitute proof of malicious or illicit behavior.
-
----
-
-# 6. Explainable Investigative Signals
-
-Trace-X does not rely solely on an unexplained ML score.
-
-The platform generates supporting signals that explain why an entity was prioritized.
-
-Examples include:
-
-- Critical behavioral anomaly
-- Elevated behavioral anomaly
-- Distributed network activity
-- ASN diversity
-- Large transaction neighborhood
-- Strong flow imbalance
-- Address reuse
-- High transaction velocity
-
-Example:
-
-```text
-RISK SCORE
-99.76 / 100
-
-INVESTIGATIVE SIGNALS
-
-• Critical behavioral anomaly
-• Distributed network activity
-• ASN diversity
-• Large transaction neighborhood
-• Strong flow imbalance
-```
-
-This approach helps an analyst understand **why** an entity surfaced instead of treating the ML model as a black box.
-
----
-
-# 7. Wallet Investigation
-
-Trace-X provides a dedicated investigation view for individual wallets.
-
-A wallet investigation can include:
-
-- Wallet address
-- First observed timestamp
-- Last observed timestamp
-- Transaction count
-- Total received value
-- Total sent value
-- Risk score
-- Evidence confidence
-- Anomaly score
-- Source IPs
-- Destination IPs
-- Countries
-- ASNs
-- Network observations
-- Recent transactions
-- Connected wallets
-- Investigative signals
-
-Example investigation flow:
-
-```text
-Wallet
-  │
-  ├── Risk Profile
-  │
-  ├── Behavioral Signals
-  │
-  ├── Network Footprint
-  │      ├── IPs
-  │      ├── Countries
-  │      └── ASNs
-  │
-  ├── Recent Transactions
-  │
-  ├── Connected Wallets
-  │
-  └── Investigative Signals
-```
-
----
-
-# 8. Transaction Analysis
-
-Trace-X also supports transaction-level investigation.
-
-For an individual TXID, the platform can examine:
-
-- Transaction ID
-- Timestamp
-- Transaction fee
-- Script type
-- Input count
-- Output count
-- Total input value
-- Total output value
-- Connected wallets
-- Source IP activity
-- Destination IP activity
-- Countries
-- ASNs
-- Investigative evidence
-
-Possible transaction-level signals include:
-
-- Address reuse
-- Source-IP activity
-- Output fan-out
-- Transaction value behavior
-- Connected entity relationships
-
-Transaction prioritization is presented as **Investigative Priority**, rather than claiming that the transaction itself is malicious.
-
----
-
-# 9. Entity & Network Graph
-
-Trace-X builds a relationship graph connecting blockchain and network entities.
-
-Example:
-
-```text
-                   ┌─────────────┐
-                   │   Source IP │
-                   └──────┬──────┘
-                          │
-                          ▼
-                 ┌────────────────┐
-                 │ Network Event  │
-                 └───────┬────────┘
-                         │
-                         ▼
-                  ┌─────────────┐
-                  │ Transaction │
-                  └──────┬──────┘
-                         │
-                ┌────────┴────────┐
-                ▼                 ▼
-         ┌────────────┐    ┌────────────┐
-         │Input Wallet│    │Output Wallet│
-         └─────┬──────┘    └──────┬─────┘
-               │                  │
-               └────────┬─────────┘
-                        ▼
-                Connected Entities
-```
-
-Trace-X also supports focused graph analysis around selected wallets.
-
-This allows an investigator to explore local neighborhoods without attempting to render the entire dataset at once.
-
----
-
-# 10. GeoIP & ASN Enrichment
-
-Trace-X supports offline IP enrichment using **DB-IP Lite** databases.
-
-The enrichment layer provides:
-
-- Country information
-- Autonomous System information
-
-This allows observed IP addresses to be enriched with geographic and network context without requiring a live external lookup during analysis.
-
-### Attribution
-
-IP geolocation data is provided using DB-IP Lite.
-
-https://db-ip.com
-
----
-
-# Dashboard
-
-The Trace-X frontend is designed as an analyst-oriented cryptocurrency intelligence workstation.
-
-## Overview
-
-Provides a high-level view of:
-
-- Wallets analyzed
-- High-risk alerts
-- ML anomalies
-- Average risk
-- Maximum observed risk
-- Prioritized investigative leads
-
-## Alerts
-
-Provides ranked wallet entities requiring further investigation.
-
-## Wallet Investigation
-
-Provides detailed forensic-style analysis of an individual wallet.
-
-## Transaction Analysis
-
-Provides transaction-level flow, entity, and network analysis.
-
-## Network Graph
-
-Provides relationship visualization between wallets, transactions, IPs, and observations.
-
-## Wallet Directory
-
-Provides a searchable/indexed view of wallet entities.
-
-## Dataset Import
-
-Provides the interface for bringing structured investigation datasets into the analysis pipeline.
-
----
-
-# System Architecture
-
-```text
-                         TRACE-X
-                            │
-          ┌─────────────────┴─────────────────┐
-          │                                   │
-      DATA LAYER                         PRESENTATION
-          │                                   │
-   ┌──────┴──────┐                     HTML / CSS / JS
-   │             │                            │
-CSV / JSON / XML │                            │
-   │             │                            │
-   ▼             ▼                            ▼
-Ingestion     GeoIP / ASN                FastAPI API
-   │             │                            │
-   └──────┬──────┘                            │
-          │                                   │
-          ▼                                   │
-    SQLite Database ◄─────────────────────────┘
-          │
-          ▼
-  Feature Engineering
-          │
-          ▼
-   Isolation Forest
-          │
-          ▼
-    Risk Scoring
-          │
-      ┌───┴────┐
-      ▼        ▼
-   Alerts     Graph
-      │        │
-      └───┬────┘
-          ▼
-  Analyst Investigation
-```
-
----
-
-# Technology Stack
-
-| Layer | Technology |
-|---|---|
-| Programming Language | Python |
-| Backend API | FastAPI |
-| API Server | Uvicorn |
-| Database | SQLite |
-| Database Layer | SQLAlchemy |
-| Data Processing | Pandas |
-| Numerical Computing | NumPy |
-| Machine Learning | Scikit-learn |
-| Anomaly Detection | Isolation Forest |
-| Feature Scaling | StandardScaler |
-| Model Persistence | Joblib |
-| Graph Analysis | NetworkX |
-| IP Enrichment | GeoIP2 / DB-IP Lite |
-| Frontend | HTML5 / CSS3 / JavaScript |
-
----
-
-# Project Structure
-
-```text
 trace-x/
+├── requirements.txt            # Python dependencies
+├── README.md                   # Platform documentation
 │
 ├── backend/
-│   ├── __init__.py
-│   ├── init_db.py
-│   ├── ingest.py
-│   ├── train_model.py
-│   ├── generate_alerts.py
-│   ├── update_geoip.py
+│   ├── init_db.py              # Database schema initialization
+│   ├── ingest.py               # CLI dataset ingestion script
+│   ├── train_model.py          # ML Isolation Forest training pipeline
+│   ├── generate_alerts.py      # Batch risk scoring & alert generator
+│   ├── update_geoip.py         # DB-IP GeoIP/ASN updater
 │   │
 │   └── app/
-│       ├── __init__.py
-│       ├── main.py
-│       │
+│       ├── main.py             # FastAPI entrypoint & static mount
 │       ├── api/
-│       │   ├── __init__.py
-│       │   └── routes.py
-│       │
+│       │   └── routes.py       # REST API route handlers
 │       ├── core/
-│       │   ├── __init__.py
-│       │   └── database.py
-│       │
+│       │   └── database.py     # SQLite engine & session management
 │       ├── models/
-│       │   ├── __init__.py
-│       │   └── entities.py
-│       │
+│       │   └── entities.py     # SQLAlchemy ORM models
 │       ├── services/
-│       │   └── geoip.py
-│       │
+│       │   ├── geoip.py        # MaxMind / DB-IP enrichment
+│       │   └── report_generator.py # 12-Section JSON & ReportLab PDF engine
 │       ├── ml/
-│       │   ├── __init__.py
-│       │   ├── features.py
-│       │   ├── detector.py
-│       │   ├── risk.py
-│       │   └── pipeline.py
-│       │
+│       │   ├── features.py     # 9-vector feature extraction
+│       │   ├── detector.py     # Isolation Forest wrapper
+│       │   ├── risk.py         # Composite 4-vector risk evaluation
+│       │   ├── generator.py    # Multi-model synthetic dataset generator
+│       │   ├── registry.py     # ML model registry & versioning
+│       │   └── pipeline.py     # End-to-end training & scoring pipeline
 │       ├── graph/
-│       │   └── network.py
-│       │
-│       ├── ingestion/
-│       │   └── loader.py
-│       │
-│       └── utils/
+│       │   └── network.py      # NetworkX graph analysis & synopsis
+│       └── ingestion/
+│           └── loader.py       # CSV dataset ingestion & normalization
 │
 ├── frontend/
-│   ├── index.html
-│   ├── style.css
-│   └── app.js
+│   ├── index.html              # Single-page workstation shell
+│   ├── style.css               # Cyber-intelligence design system
+│   └── app.js                  # SPA routing engine & view controllers
 │
 ├── data/
 │   ├── raw/
-│   │   └── bitcoin_traffic.csv
-│   │
-│   ├── processed/
-│   │
+│   │   ├── bitcoin_traffic.csv # Standard benchmark dataset (3,000 TXs)
+│   │   └── dataset_*.csv       # Generated dataset archive
 │   └── geoip/
 │       ├── dbip-country-lite.mmdb
 │       └── dbip-asn-lite.mmdb
 │
-├── models/
-│   └── wallet_anomaly_model.joblib
-│
-├── scripts/
-│   └── generate_dataset.py
-│
-├── docs/
-│   └── data-architecture.md
-│
-├── tests/
-│
-├── README.md
-├── requirements.txt
-└── .gitignore
+└── models/
+    ├── wallet_anomaly_model.joblib # Trained Isolation Forest model
+    └── risk_scoring_engine.json    # Calibrated risk weights & caps
 ```
 
 ---
 
-# Dataset
+## 7. Installation & Setup
 
-The current prototype operates on a **synthetic Bitcoin transaction traffic dataset** designed for development, testing, demonstration, and evaluation.
+### Prerequisites
+* **macOS** (Apple Silicon or Intel) or **Linux** (x86_64 / aarch64)
+* **Python 3.12+** (Conda recommended)
+* **Git**
 
-Current dataset:
-
-```text
-Records:              3,000
-Unique Wallets:         480
-Observed IPs:            170
-```
-
-## Synthetic Scenarios
-
-| Scenario | Records |
-|---|---:|
-| Normal | 2,208 |
-| High Velocity | 376 |
-| Peeling-like | 252 |
-| Mixing-like | 164 |
-| **Total** | **3,000** |
-
-The `scenario` field exists for development and evaluation of the synthetic dataset.
-
-It is **not used as an input feature by the anomaly detection model**.
-
-### Dataset Disclaimer
-
-The included data does **not** represent:
-
-- Real intercepted Bitcoin traffic
-- Live network traffic
-- Seized cryptocurrency data
-- Real investigative intelligence
-- Real-world attribution
-
-It is synthetic data generated to reproduce investigation-oriented transaction and network patterns.
-
----
-
-# Installation
-
-## Requirements
-
-Recommended environment:
-
-- Python 3.12+
-- Conda or Python virtual environment
-- Git
-- macOS or Linux
-
----
-
-## 1. Clone the Repository
-
+### 1. Clone the Repository
 ```bash
 git clone https://github.com/risshitm-imtb/trace-x.git
 cd trace-x
 ```
 
----
-
-## 2. Create the Python Environment
-
-Using Conda:
-
+### 2. Create & Activate Conda Environment
 ```bash
-conda create -n tracex python=3.12
+conda create -n tracex python=3.12 -y
 conda activate tracex
 ```
 
----
-
-## 3. Install Dependencies
-
+### 3. Install Python Dependencies
 ```bash
 pip install -r requirements.txt
 ```
 
 ---
 
-# Running Trace-X
+## 8. Quick Start & Execution
 
-## Step 1: Initialize the Database
+### One-Click Launch (Recommended)
+From the repository root:
+```bash
+./run.sh
+```
+*Auto-detects the Python Conda environment, terminates any stale processes on port `8000`, starts the Uvicorn server, and opens `http://127.0.0.1:8000` in your browser.*
+
+### Manual Step-by-Step CLI Execution
+If you prefer running pipeline stages individually:
 
 ```bash
+# 1. Initialize SQLite Database
 python -m backend.init_db
-```
 
-This creates the SQLite investigation database and required entity tables.
-
----
-
-## Step 2: Ingest the Dataset
-
-```bash
+# 2. Ingest Benchmark Traffic Dataset
 python -m backend.ingest
-```
 
-The ingestion layer validates and normalizes the dataset before storing the entities and observations.
-
----
-
-## Step 3: Train the ML Model
-
-```bash
+# 3. Train Isolation Forest Machine Learning Model
 python -m backend.train_model
-```
 
-The trained anomaly detection model is persisted using Joblib.
-
----
-
-## Step 4: Generate Investigative Alerts
-
-```bash
+# 4. Generate Investigative Alerts & Risk Scores
 python -m backend.generate_alerts
+
+# 5. Launch FastAPI Server
+python -m uvicorn backend.app.main:app --host 127.0.0.1 --port 8000 --reload
 ```
 
-This runs the anomaly detection and risk-scoring pipeline and generates ranked investigative leads.
+Then open **`http://127.0.0.1:8000`** in your web browser.
 
 ---
 
-## Step 5: Start the API and Dashboard
+## 9. REST API Reference
 
-```bash
-uvicorn backend.app.main:app --reload
-```
-
-Then open:
-
-```text
-http://127.0.0.1:8000
-```
-
----
-
-# API
-
-Trace-X exposes a REST API through FastAPI.
-
-## Health Check
-
-```http
-GET /api/health
-```
-
-Returns the operational status of the platform.
+| Method | Endpoint | Description |
+| :--- | :--- | :--- |
+| `GET` | `/api/health` | Service operational health check |
+| `GET` | `/api/system/health` | Complete system diagnostics (DB counts, ML model registry, runtime specs) |
+| `GET` | `/api/overview` | High-level intelligence metrics, counts, and risk distribution |
+| `GET` | `/api/alerts` | Prioritized high-risk entity alerts list |
+| `GET` | `/api/wallets` | Full wallet registry with risk scores |
+| `GET` | `/api/wallet/{address}` | Deep wallet dossier (4-vector dimensions, flows, counterparties, signals) |
+| `GET` | `/api/transactions` | Paginated transaction ledger |
+| `GET` | `/api/transaction/{txid}` | 3-column transaction flow topology, evidence, and network observations |
+| `GET` | `/api/graph` | Global network graph nodes, edges, and synopsis statistics |
+| `GET` | `/api/graph/focused` | Subgraph centered on a specific target wallet address |
+| `GET` | `/api/datasets` | Repository archive of persisted datasets with metadata |
+| `GET` | `/api/datasets/{id}/download` | Stream and download raw CSV file for a given dataset ID |
+| `POST` | `/api/datasets/{id}/ingest` | Re-ingest and retrain active database using a historical dataset |
+| `DELETE` | `/api/datasets/{id}` | Safely delete a generated dataset and its disk file |
+| `POST` | `/api/ingest` | Ingest CSV file, load default benchmark, or generate fresh dataset |
+| `GET` | `/api/sessions` | Audit trail of historical analysis sessions |
+| `GET` | `/api/reports/dossier` | Structured 12-section JSON forensic investigation dossier |
+| `GET` | `/api/reports/pdf` | Generate and download publication-grade ReportLab vector PDF |
+| `GET` | `/api/ml/models` | Machine learning model registry metadata and signatures |
 
 ---
 
-## Overview
-
-```http
-GET /api/overview
-```
-
-Returns:
-
-- Total wallets
-- High-risk alerts
-- Anomalies
-- Average risk
-- Maximum risk
-
----
-
-## Alerts
-
-```http
-GET /api/alerts
-```
-
-Returns ranked high-risk wallet entities and supporting signals.
-
----
-
-## Wallet Investigation
-
-```http
-GET /api/wallet/{wallet_address}
-```
-
-Returns wallet-level:
-
-- Entity information
-- Risk score
-- Evidence confidence
-- Anomaly score
-- Behavioral metrics
-- Network infrastructure
-- Countries
-- ASNs
-- Recent transactions
-- Connected wallets
-- Investigative signals
-
----
-
-## Network Graph
-
-```http
-GET /api/graph
-```
-
-Returns the investigation relationship graph.
-
----
-
-## Focused Network Graph
-
-```http
-GET /api/graph/focused?wallet_address={wallet_address}
-```
-
-Returns a bounded graph neighborhood around a selected wallet.
-
----
-
-## Transaction Analysis
-
-```http
-GET /api/transaction/{txid}
-```
-
-Returns transaction-level investigative analysis.
-
----
-
-# Example Investigation Output
-
-A sample high-risk wallet from the current synthetic dataset produced:
-
-```text
-Risk Score:             99.76 / 100
-Evidence Confidence:    99.48
-Anomaly Score:          0.1987
-
-Transactions:           37
-Source IPs:              15
-Destination IPs:         35
-Network Diversity:       87
-Connected Wallets:       50
-```
-
-Associated investigative signals included:
-
-```text
-• Critical behavioral anomaly
-• Distributed network activity
-• ASN diversity
-• Large transaction neighborhood
-• Strong flow imbalance
-```
-
-These results demonstrate the platform's ability to combine multiple behavioral, network, and graph signals into a prioritized investigative lead.
-
----
-
-# Machine Learning Pipeline
-
-```text
-                    Wallet Data
-                         │
-                         ▼
-                Feature Engineering
-                         │
-                         ▼
-                   StandardScaler
-                         │
-                         ▼
-                  Isolation Forest
-                         │
-                         ▼
-                    Anomaly Score
-                         │
-                         ▼
-                    Risk Scoring
-                         │
-                         ▼
-              Investigative Priority
-                         │
-                         ▼
-               Explainable Signals
-```
-
-The current implementation uses unsupervised anomaly detection.
-
-This means the model is designed to identify **behavioral outliers**, not directly determine whether a wallet is involved in criminal activity.
-
----
-
-# Investigation Philosophy
-
-Trace-X follows a simple principle:
-
-> **A suspicious transaction is rarely suspicious because of one signal.**
-
-Meaningful investigation can emerge from the intersection of:
-
-```text
-Blockchain Behavior
-        +
-Network Infrastructure
-        +
-Temporal Activity
-        +
-Entity Relationships
-        +
-Behavioral Anomalies
-        ↓
-Prioritized Investigative Lead
-```
-
-The purpose of Trace-X is therefore not to automatically declare an entity malicious.
-
-Its purpose is to help an analyst answer:
-
-> **“Which entities deserve my attention first, and what evidence caused them to surface?”**
-
----
-
-# Security & Privacy
-
-Trace-X is designed around an offline investigation workflow.
-
-The core analysis pipeline does not require a live blockchain connection.
-
-This architecture can be useful in environments where investigation datasets must remain local.
-
-However:
-
-- Sensitive operational intelligence should not be placed in public repositories.
-- Real investigative datasets should be stored using appropriate security controls.
-- Real IP intelligence should not be exposed through an uncontrolled deployment.
-- Model outputs should be reviewed by qualified analysts.
-- Risk scores should support human investigation rather than replace it.
-- Network observations should not automatically be interpreted as proof of individual identity or control.
-
----
-
-# Limitations
-
-Trace-X is currently a prototype/research implementation.
-
-## Synthetic Data
-
-The current dataset is synthetic and does not represent real-world Bitcoin network traffic.
-
-## Heuristic Risk Scoring
-
-The risk score combines ML output with engineered behavioral signals.
-
-It is an investigative prioritization mechanism rather than a calibrated probability.
-
-## Unsupervised Machine Learning
-
-Isolation Forest identifies behavioral outliers but does not inherently determine whether an entity is malicious, criminal, or benign.
-
-## Network Attribution
-
-An observed IP address should not automatically be interpreted as proof that a specific person controlled a wallet.
-
-IP addresses may represent shared infrastructure, proxies, VPNs, hosting providers, NAT environments, or other network configurations.
-
-## Prototype Scale
-
-The current SQLite architecture is suitable for prototype and investigation-scale workloads.
-
-A production implementation would require additional engineering around:
-
-- Large-scale ingestion
-- Distributed processing
-- Database scalability
-- Access control
-- Audit logging
-- Evidence integrity
-- Secure storage
-- Model governance
-- Performance optimization
-- Multi-user operation
-
----
-
-# Future Development
-
-Potential future improvements include:
-
-- [ ] Streaming transaction and network ingestion
-- [ ] Full JSON ingestion
-- [ ] Full XML ingestion
-- [ ] Larger-scale graph processing
-- [ ] Advanced wallet/entity clustering
-- [ ] Temporal transaction graph analysis
-- [ ] Peeling-chain detection
-- [ ] Mixing-pattern detection
-- [ ] Temporal anomaly detection
-- [ ] Graph-based machine learning
-- [ ] Model calibration
-- [ ] Model evaluation metrics
-- [ ] Analyst case management
-- [ ] Investigation timeline reconstruction
-- [ ] Evidence export
-- [ ] Chain-of-custody support
-- [ ] STIX-compatible intelligence export
-- [ ] Role-based access control
-- [ ] Immutable audit logging
-- [ ] Production-scale database architecture
-- [ ] Advanced analyst collaboration workflows
-
----
-
-# Ethical & Authorized Use
-
-Trace-X is intended for:
-
-- Cybersecurity research
-- Blockchain analytics
-- Authorized investigations
-- Academic experimentation
-- Security operations
-- Training and demonstration
-
-The platform should only be used with data and systems for which the operator has appropriate authorization.
-
-The developers do not endorse unauthorized surveillance, intrusion, deanonymization, or misuse of cryptocurrency or network data.
-
----
-
-# Project Status
-
-```text
-TRACE-X PROTOTYPE
-────────────────────────────────────────
-
-Data Ingestion                  ✓
-Data Validation                 ✓
-Database Layer                  ✓
-Entity Modeling                 ✓
-Feature Engineering             ✓
-ML Anomaly Detection            ✓
-Risk Scoring                    ✓
-Explainable Alerts              ✓
-Wallet Investigation             ✓
-Transaction Analysis             ✓
-Network Graph                   ✓
-Focused Graph Analysis          ✓
-GeoIP / ASN Enrichment          ✓
-Analyst Dashboard               ✓
-Synthetic Dataset               ✓
-REST API                        ✓
-```
-
----
-
-# Technology Summary
-
-```text
-                    TRACE-X
-                       │
-       ┌───────────────┼────────────────┐
-       │               │                │
-       ▼               ▼                ▼
-   BLOCKCHAIN        NETWORK          MACHINE
-    ANALYSIS        ANALYSIS         LEARNING
-       │               │                │
-       │               │                │
-    Wallets          IPs          Isolation Forest
-    TXIDs            Ports        Feature Engineering
-    Inputs           ASNs         Anomaly Detection
-    Outputs          GeoIP        Risk Scoring
-       │               │                │
-       └───────────────┼────────────────┘
-                       ▼
-                ENTITY CORRELATION
-                       │
-                       ▼
-                GRAPH ANALYSIS
-                       │
-                       ▼
-             INVESTIGATIVE LEADS
-                       │
-                       ▼
-                 TRACE-X UI
-```
-
----
-
-# License
-
-No open-source license has currently been assigned to this repository.
-
-All rights remain with the repository owner unless otherwise specified.
-
----
-
-# Author
-
-**Risshit M**
-
-Trace-X was developed as a prototype implementation for the problem statement:
-
-**“AI-Powered Monitoring & Analysis of Bitcoin Transaction Traffic”**
-
----
-
-# Repository
-
-GitHub:
-
-https://github.com/risshitm-imtb/trace-x
-
----
-
-## Trace-X
-
-### Detect. Correlate. Investigate.
-```
+## 10. Data Integrity & Ethical Disclaimer
+
+1. **Synthetic Investigation Data**: The included Bitcoin transaction datasets and network observation records are synthetically generated for research, testing, demonstration, and forensic tooling evaluation.
+2. **Investigative Prioritization**: Risk scores and anomaly confidence ratings are algorithmic prioritization signals designed to assist human analysts. They do not constitute conclusive proof of illicit activity or legal evidence without independent verification.
+3. **Offline Privacy**: TRACE-X operates completely offline without transmitting transaction queries or IP metadata to third-party tracking APIs.

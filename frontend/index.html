@@ -1,14 +1,215 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="#080b10">
-    <title>Trace-X Forensic Workstation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#07090e">
+    <meta name="description" content="TRACE-X: AI-Powered Bitcoin Transaction Traffic Monitoring & Analysis">
+    <title>TRACE-X // Bitcoin Transaction Intelligence Workstation</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/static/style.css">
 </head>
-<body>
-    <div id="app" class="app-shell"></div>
+<body class="theme-dark">
+    <div id="app" class="app-layout">
+        <!-- TOP WORKSTATION HEADER -->
+        <header class="app-header">
+            <div class="header-left">
+                <a href="#/command-center" class="brand-badge">
+                    <div class="brand-symbol">
+                        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                            <polyline points="2 17 12 22 22 17"></polyline>
+                            <polyline points="2 12 12 17 22 12"></polyline>
+                        </svg>
+                    </div>
+                    <div class="brand-titles">
+                        <span class="brand-name">TRACE<span class="accent-x">-X</span></span>
+                        <span class="brand-tagline">BITCOIN INTELLIGENCE WORKSTATION</span>
+                    </div>
+                </a>
+                <div class="workstation-status-pill">
+                    <span class="status-pulse-dot"></span>
+                    <span class="status-label">ENGINE OPERATIONAL</span>
+                    <span class="status-sep">|</span>
+                    <span class="status-meta" id="header-dataset-stat">3,000 TXS MONITORED</span>
+                </div>
+            </div>
+
+            <!-- OMNIBAR GLOBAL SEARCH -->
+            <div class="header-center">
+                <div class="omnibar-wrapper">
+                    <svg class="omnibar-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                    <input type="text" id="global-search-input" class="omnibar-input" placeholder="Search Wallet Address (bc1...), TXID, or IP Address..." autocomplete="off" spellcheck="false">
+                    <kbd class="omnibar-shortcut">↵ ENTER</kbd>
+                </div>
+            </div>
+
+            <div class="header-right">
+                <button class="header-btn" id="btn-header-refresh" title="Refresh Live Intelligence Data">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="23 4 23 10 17 10"></polyline>
+                        <polyline points="1 20 1 14 7 14"></polyline>
+                        <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+                    </svg>
+                    <span>REFRESH</span>
+                </button>
+                <a href="#/reports" class="header-btn header-btn-primary" title="Generate Forensic Report">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                        <line x1="16" y1="13" x2="8" y2="13"></line>
+                        <line x1="16" y1="17" x2="8" y2="17"></line>
+                        <polyline points="10 9 9 9 8 9"></polyline>
+                    </svg>
+                    <span>DOSSIER</span>
+                </a>
+            </div>
+        </header>
+
+        <!-- MAIN LAYOUT BODY -->
+        <div class="app-body">
+            <!-- SIDEBAR NAVIGATION -->
+            <aside class="app-sidebar" id="app-sidebar">
+                <nav class="nav-tree">
+                    <!-- SECTION: CORE -->
+                    <div class="nav-section-title">OVERVIEW</div>
+                    <a href="#/command-center" class="nav-link active" data-route="command-center">
+                        <svg class="nav-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="3" width="7" height="7"></rect>
+                            <rect x="14" y="3" width="7" height="7"></rect>
+                            <rect x="14" y="14" width="7" height="7"></rect>
+                            <rect x="3" y="14" width="7" height="7"></rect>
+                        </svg>
+                        <span class="nav-text">COMMAND CENTER</span>
+                        <span class="nav-badge nav-badge-live">LIVE</span>
+                    </a>
+
+                    <!-- SECTION: INVESTIGATE -->
+                    <div class="nav-section-title">INVESTIGATE</div>
+                    <a href="#/wallet" class="nav-link" data-route="wallet">
+                        <svg class="nav-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 12V8H6a2 2 0 0 1-2-2c0-1.1.9-2 2-2h12v4"></path>
+                            <path d="M4 6v12c0 1.1.9 2 2 2h14v-4"></path>
+                            <path d="M18 12a2 2 0 0 0-2 2c0 1.1.9 2 2 2h4v-4h-4z"></path>
+                        </svg>
+                        <span class="nav-text">Wallet Intelligence</span>
+                    </a>
+                    <a href="#/transaction" class="nav-link" data-route="transaction">
+                        <svg class="nav-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="17 1 21 5 17 9"></polyline>
+                            <path d="M3 11V9a4 4 0 0 1 4-4h14"></path>
+                            <polyline points="7 23 3 19 7 15"></polyline>
+                            <path d="M21 13v2a4 4 0 0 1-4 4H3"></path>
+                        </svg>
+                        <span class="nav-text">Transaction Flow</span>
+                    </a>
+                    <a href="#/network" class="nav-link" data-route="network">
+                        <svg class="nav-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="18" cy="5" r="3"></circle>
+                            <circle cx="6" cy="12" r="3"></circle>
+                            <circle cx="18" cy="19" r="3"></circle>
+                            <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                            <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+                        </svg>
+                        <span class="nav-text">Network Graph</span>
+                        <span class="nav-badge">CORRELATION</span>
+                    </a>
+
+                    <!-- SECTION: MONITOR -->
+                    <div class="nav-section-title">MONITOR</div>
+                    <a href="#/alerts" class="nav-link" data-route="alerts">
+                        <svg class="nav-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                            <line x1="12" y1="9" x2="12" y2="13"></line>
+                            <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                        </svg>
+                        <span class="nav-text">Threat Alerts</span>
+                        <span class="nav-badge nav-badge-alert" id="nav-alert-count">30</span>
+                    </a>
+                    <a href="#/sessions" class="nav-link" data-route="sessions">
+                        <svg class="nav-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <polyline points="12 6 12 12 16 14"></polyline>
+                        </svg>
+                        <span class="nav-text">Analysis Sessions</span>
+                    </a>
+
+                    <!-- SECTION: DATA -->
+                    <div class="nav-section-title">DATA PIPELINE</div>
+                    <a href="#/ingest" class="nav-link" data-route="ingest">
+                        <svg class="nav-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="17 8 12 3 7 8"></polyline>
+                            <line x1="12" y1="3" x2="12" y2="15"></line>
+                        </svg>
+                        <span class="nav-text">Dataset Ingestion</span>
+                    </a>
+
+                    <!-- SECTION: REPORTS -->
+                    <div class="nav-section-title">INTELLIGENCE</div>
+                    <a href="#/reports" class="nav-link" data-route="reports">
+                        <svg class="nav-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            <polyline points="14 2 14 8 20 8"></polyline>
+                            <line x1="16" y1="13" x2="8" y2="13"></line>
+                            <line x1="16" y1="17" x2="8" y2="17"></line>
+                            <polyline points="10 9 9 9 8 9"></polyline>
+                        </svg>
+                        <span class="nav-text">Forensic Dossier</span>
+                    </a>
+
+                    <!-- SECTION: SYSTEM -->
+                    <div class="nav-section-title">SYSTEM</div>
+                    <a href="#/system" class="nav-link" data-route="system">
+                        <svg class="nav-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <activity viewBox="0 0 24 24"></activity>
+                            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                        </svg>
+                        <span class="nav-text">System Health</span>
+                    </a>
+                </nav>
+
+                <!-- SIDEBAR FOOTER TELEMETRY -->
+                <div class="sidebar-footer">
+                    <div class="telemetry-box">
+                        <div class="telemetry-row">
+                            <span class="telemetry-key">AI MODEL</span>
+                            <span class="telemetry-val text-cyan">ISOLATION FOREST</span>
+                        </div>
+                        <div class="telemetry-row">
+                            <span class="telemetry-key">RISK ENGINE</span>
+                            <span class="telemetry-val text-green">MULTI-VECTOR v1.0</span>
+                        </div>
+                        <div class="telemetry-row">
+                            <span class="telemetry-key">DATABASE</span>
+                            <span class="telemetry-val">SQLITE 3</span>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- MAIN VIEW CONTAINER -->
+            <main class="app-content" id="main-content">
+                <!-- Content injected dynamically by Router -->
+                <div class="view-loading-skeleton">
+                    <div class="skeleton-shimmer"></div>
+                </div>
+            </main>
+        </div>
+
+        <!-- GLOBAL TOAST NOTIFICATIONS CONTAINER -->
+        <div id="toast-container" class="toast-container"></div>
+
+        <!-- MODAL OVERLAY -->
+        <div id="modal-container" class="modal-container hidden"></div>
+    </div>
+
+    <!-- MAIN APP SCRIPT -->
     <script src="/static/app.js" defer></script>
 </body>
 </html>

@@ -19,16 +19,18 @@ dist/
 .vscode/
 
 # Data
-data/raw/
+data/raw/dataset_*.csv
+data/raw/upload_*
 data/processed/
+!data/raw/bitcoin_traffic.csv
 
 # ML artifacts
 models/*.pkl
 models/*.joblib
+!models/risk_scoring_engine.json
 
 # Local database
-*.db
 *.sqlite
 *.sqlite3
 data/geoip/*.mmdb
-trace_x.db
+
